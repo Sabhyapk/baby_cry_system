@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(__file__)
 
 SAVE_DIR = os.path.join(BASE_DIR, "saved_models")
 
-MODEL_PATH = os.path.join(SAVE_DIR, "babycry_cnn.h5")
+MODEL_PATH = os.path.join(SAVE_DIR, "babycry_cnn.keras")
 SCALER_PATH = os.path.join(SAVE_DIR, "scaler.pkl")
 CLASSES_PATH = os.path.join(SAVE_DIR, "classes.npy")
 PARAMS_PATH = os.path.join(SAVE_DIR, "mfcc_params.json")
