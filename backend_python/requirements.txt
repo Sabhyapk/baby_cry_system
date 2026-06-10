@@ -1,0 +1,12 @@
+numpy
+librosa>=0.10.0
+soundfile
+tqdm
+tensorflow>=2.10
+joblib
+scikit-learn
+noisereduce
+pydub
+fastapi
+uvicorn[standard]
+python-multipart
