@@ -3,7 +3,6 @@ librosa==0.10.1
 soundfile
 tqdm
 tensorflow==2.20.0
-keras==3.13.2
 joblib
 scikit-learn==1.4.2
 noisereduce
