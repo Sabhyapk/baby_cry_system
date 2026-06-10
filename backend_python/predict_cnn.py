@@ -5,7 +5,7 @@ import librosa
 import numpy as np
 
 from datetime import datetime
-from tensorflow.keras.models import load_model
+import tensorflow as tf
 
 # =====================================
 # PATHS
@@ -15,7 +15,8 @@ BASE_DIR = os.path.dirname(__file__)
 
 SAVE_DIR = os.path.join(BASE_DIR, "saved_models")
 
-MODEL_PATH = os.path.join(SAVE_DIR, "babycry_cnn.keras")
+MODEL_PATH = os.path.join(SAVE_DIR, "exported_model")
+
 SCALER_PATH = os.path.join(SAVE_DIR, "scaler.pkl")
 CLASSES_PATH = os.path.join(SAVE_DIR, "classes.npy")
 PARAMS_PATH = os.path.join(SAVE_DIR, "mfcc_params.json")
@@ -26,10 +27,7 @@ PARAMS_PATH = os.path.join(SAVE_DIR, "mfcc_params.json")
 
 print("Loading trained model...")
 
-model = load_model(
-    MODEL_PATH,
-    compile=False
-)
+model = tf.saved_model.load(MODEL_PATH)
 
 scaler = joblib.load(
     SCALER_PATH
@@ -185,11 +183,15 @@ def predict_audio(file_path):
     # MODEL PREDICTION
     # =====================================
 
-    prediction = model.predict(
-        X,
-        verbose=0
-    )[0]
+    infer = model.signatures["serving_default"]
 
+    prediction = infer(
+    tf.constant(X, dtype=tf.float32)
+)
+
+    prediction = list(
+    prediction.values()
+)[0].numpy()[0]
     print("RAW PREDICTIONS:", prediction)
 
     predicted_index = np.argmax(prediction)
